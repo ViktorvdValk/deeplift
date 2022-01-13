@@ -339,7 +339,7 @@ def layer_name_to_conversion_function(layer_name):
         'prelu': prelu_conversion,
 
         'sequential': sequential_container_conversion,
-        'model': functional_container_conversion,
+        'functional': functional_container_conversion,
         'concatenate': concat_conversion_function 
     }
     # lowercase to create resistance to capitalization changes
