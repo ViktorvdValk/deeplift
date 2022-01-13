@@ -372,7 +372,7 @@ def convert_model_from_saved_files(
             model_config = model_config["layers"]
         layer_configs = model_config
         model_conversion_function = convert_sequential_model
-    elif (model_class_name=="Model"):
+    elif (model_class_name=="Functional"):
         layer_configs = model_config["layers"]
         model_conversion_function = convert_functional_model
     else:
@@ -387,14 +387,14 @@ def convert_model_from_saved_files(
             ("Layer "+layer_name+" is in the layer names but not in the "
              +" weights file which has layer names "+model_weights.keys())
 
-        if (layer_config["class_name"] in ["Model", "Sequential"]):
+        if (layer_config["class_name"] in ["Functional", "Sequential"]):
             nested_model_weights =\
                 OrderedDict(zip(
                  model_weights[layer_name].attrs["weight_names"],
                  [model_weights[layer_name][x] for x in
                   model_weights[layer_name].attrs["weight_names"]]))
 
-        if (layer_config["class_name"]=="Model"):
+        if (layer_config["class_name"]=="Functional"):
             insert_weights_into_nested_model_config(
                 nested_model_weights=nested_model_weights,
                 nested_model_layer_config=layer_config["config"]["layers"])
@@ -417,7 +417,7 @@ def insert_weights_into_nested_model_config(nested_model_weights,
                                             nested_model_layer_config):
 
         for layer_config in nested_model_layer_config:
-            if (layer_config["class_name"]=="Model"):
+            if (layer_config["class_name"]=="Functional"):
                 insert_weights_into_nested_model_config(
                     nested_model_weights=nested_model_weights,
                     nested_model_layer_config=layer_config["config"]["layers"])
